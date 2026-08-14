@@ -1,0 +1,58 @@
+server:
+  port: 9000
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: api-gateway
+
+  codec:
+    max-in-memory-size: 20MB
+
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: user-service-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+
+        - id: auth-route
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: item-service-route
+          uri: lb://ITEM-SERVICE
+          predicates:
+            - Path=/api/items/**
+
+        - id: claim-service-route
+          uri: lb://CLAIM-SERVICE
+          predicates:
+            - Path=/api/claims/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    prefer-ip-address: true
+#    ip-address: 34.47.225.165
+    instance-id: ${spring.application.name}:${random.value}

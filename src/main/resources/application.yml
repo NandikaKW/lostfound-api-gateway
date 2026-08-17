@@ -4,7 +4,7 @@ spring:
   cloud:
     gateway:
       server:
-        webflux:            # ← aluත් "server.webflux" level eka add karanna
+        webflux:
           globalcors:
             cors-configurations:
               '[/**]':
@@ -38,9 +38,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-
+      defaultZone: http://10.10.0.10:8761/eureka/
   instance:
     prefer-ip-address: true
-#    ip-address: 34.47.225.165
     instance-id: ${spring.application.name}:${random.value}

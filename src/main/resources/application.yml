@@ -8,7 +8,9 @@ spring:
           globalcors:
             cors-configurations:
               '[/**]':
-                allowedOrigins: "http://localhost:5173"
+                allowedOrigins:
+                  - "http://localhost:5173"
+                  - "https://lostfound-frontend-886354540707.asia-south1.run.app"
                 allowedMethods:
                   - GET
                   - POST
